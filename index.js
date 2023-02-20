@@ -13,9 +13,20 @@ const URL = "https://api.api-ninjas.com/v1/dadjokes?limit=1"
 
 async function addJoke()
 {
-    const response = await fetch(URL, option);
-    const data = await response.json();
-    // console.log(data);
-    joker.innerText = data[0].joke;
+    try{
+        joker.innerText = "Updating";
+        bt.disabled = true;
+        bt.innerText = "Loading...";
+        const response = await fetch(URL, option);
+        const data = await response.json();
+        // console.log(data);
+        bt.disabled = false;
+        bt.innerText = "Tell me a joke";
+        joker.innerText = data[0].joke;
+    }
+    catch(error){
+        joker.innerText = "An error happened, please try again later";
+        console.log(error);
+    }
 }
 bt.addEventListener("click", addJoke);
